@@ -19,10 +19,17 @@
 
 ## 项目结构
 ├── controller/       # 控制器，处理HTTP请求
+
 ├── database/         # 数据库连接相关代码
+
 ├── entity/           # 数据模型定义
+
 ├── handle/           # 业务逻辑处理
+
 ├── static/           # 静态资源（图片等）
+
 ├── templates/        # HTML模板文件
+
 ├── go.mod            # 项目依赖
+
 └── main.go           # 程序入口
