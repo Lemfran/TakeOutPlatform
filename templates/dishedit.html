@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>编辑菜品信息</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0f0;
+            /* 浅灰色背景 */
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.5);
+            z-index: 1;
+        }
+
+        .sidebar h2 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 24px;
+            border-bottom: 3px solid #8ec5e8;
+            padding-bottom: 10px;
+        }
+
+        .sidebar a {
+            display: block;
+            margin-bottom: 15px;
+            padding: 12px 20px;
+            color: #2c3e50;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .sidebar a:hover {
+            background: linear-gradient(45deg, #8ec5e8, #7fcac0);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            background: #f9f9f9;
+        }
+
+        .main-content h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 32px;
+            border-bottom: 3px solid #8ec5e8;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            color: #666;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 100%;
+            padding: 10px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        button {
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 20px;
+            }
+
+            .main-content {
+                margin: 10px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2>管理员系统</h2>
+            <a href="/manager/dishes">菜品列表</a>
+            <a href="/manager/userlist">用户列表</a>
+            <a href="/manager/orders">订单列表</a>
+            <a href="/logout">退出</a>
+        </div>
+        <div class="main-content">
+            <h1>编辑菜品信息</h1>
+            <form action="/manager/dishes/edit" method="post">
+                <input type="hidden" name="dishid" value="{{.DishID}}" />
+                <div class="form-group">
+                    <label for="dishName">菜品名称</label>
+                    <input type="text" class="form-control" id="dishname" name="dishname" value="{{.DishName}}"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="price">价格</label>
+                    <input type="number" step="0.01" class="form-control" id="price" name="price" value="{{.Price}}"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="description">描述</label>
+                    <textarea class="form-control" id="description" name="description" rows="3"
+                        required>{{.Description}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="imageURL">图片 URL</label>
+                    <input type="text" class="form-control" id="imageurl" name="imageurl" value="{{.ImageURL}}">
+                </div>
+                <button type="submit" class="btn btn-primary">保存更改</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>菜品列表</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            /* 浅灰色背景 */
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.5);
+            z-index: 1;
+        }
+
+        .sidebar h2 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 24px;
+            border-bottom: 3px solid #8ec5e8;
+            padding-bottom: 10px;
+        }
+
+        .sidebar a {
+            display: block;
+            margin-bottom: 15px;
+            padding: 12px 20px;
+            color: #2c3e50;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .sidebar a:hover {
+            background: linear-gradient(45deg, #8ec5e8, #7fcac0);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .dishes-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .dish-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .dish-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .dish-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #8ec5e8;
+        }
+
+        .dish-title {
+            color: #2c3e50;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .dish-meta {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .dish-content {
+            color: #34495e;
+            line-height: 1.6;
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        .dish-footer {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .score-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background: linear-gradient(45deg, #8ec5e8, #7fcac0);
+            color: white;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .search-container {
+      margin-bottom: 30px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .search-container input[type="text"] {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+    }
+
+    .search-container input[type="submit"] {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(45deg, #7eb6e6, #89d4c4);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .search-container input[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+        .username {
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 20px;
+            }
+
+            .dishes-container {
+                padding: 10px;
+            }
+        }
+
+        a {
+            text-decoration: none;
+            /* 取消下划线 */
+            color: inherit;
+            /* 继承父元素的颜色 */
+        }
+
+        .add-button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background-color: #5bc0de;
+            color: white;
+        }
+
+        .add-button:hover {
+            background-color: #4a9ed9;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2>用户菜单</h2>
+            <a href="/user/dishes">菜品列表</a>
+            <a href="/user/topdishes">排行</a>
+            <a href="/user/orders">我的订单</a>
+            <a href="/logout">退出</a>
+        </div>
+        <div class="main-content">
+            <div class="search-container">
+                <form action="/user/dishes/search" method="get">
+                    <input type="text" name="query" placeholder="搜索菜品...">
+                    <input type="submit" value="搜索">
+                </form>
+            </div>
+            <div class="dishes-container">
+                {{range .}}
+                <div class="dish-card">
+                    <img src="{{.ImageURL}}" alt="Dish Image" width="100">
+                    <div class="dish-header">
+                        <p>菜品：<span class="dish-title">{{.DishName}}</span></p>
+                        <span class="dish-meta">{{.Price}}</span>
+                    </div>
+                    <div class="dish-content">{{.Description}}</div>
+                    <div class="dish-footer">
+                        <button class="add-button" onclick="location.href='/user/dishes/add?id={{.DishID}}'">添加</button>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
